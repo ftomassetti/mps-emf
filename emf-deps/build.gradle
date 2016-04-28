@@ -1,0 +1,22 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.eclipse.emf:org.eclipse.emf.common:2.10.1'
+    compile 'org.eclipse.emf:org.eclipse.emf.ecore:2.10.1'
+    compile 'org.eclipse.emf:org.eclipse.emf.ecore.xmi:2.10.1'
+    testCompile 'junit:junit:4.12'
+}
+
+task fatJar(type: Jar) {
+    manifest {
+        
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
